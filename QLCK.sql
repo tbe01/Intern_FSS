@@ -85,10 +85,11 @@ SET SERVEROUTPUT on
 DECLARE 
 Ma_KH LuuKy.MaKH%type:='&Ma_KH';
 Ma_CK LuuKy.MaCK%type:='&Ma_CK';
-So_Luong %type='&So_Luong';
+So_Luong int;
 BEGIN
+    So_Luong := &So_Luong;
     UPDATE LuuKy SET SoLuong=SoLuong+So_Luong where MaKH=Ma_KH and MaCK=Ma_CK;
     DBMS_OUTPUT.put_line('C?p nh?t l?u ký thành công');
 END;
-delete procedure 
+
 
