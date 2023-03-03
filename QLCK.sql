@@ -80,7 +80,7 @@ Insert into LuuKy values ('KH03','MBB','0');
 Insert into LuuKy values ('KH04','FPTS','0');
 Insert into LuuKy values ('KH05','VGI','0');
 
-/* Procedure t?ng l?u ký */
+/* Function t?ng l?u ký */
 SET SERVEROUTPUT on  
 DECLARE 
 Ma_KH LuuKy.MaKH%type:='&Ma_KH';
@@ -90,6 +90,29 @@ BEGIN
     So_Luong := &So_Luong;
     UPDATE LuuKy SET SoLuong=SoLuong+So_Luong where MaKH=Ma_KH and MaCK=Ma_CK;
     DBMS_OUTPUT.put_line('C?p nh?t l?u ký thành công');
+    EXCEPTION
+   when no_data_found then
+   dbms_output.put_line('khong ton tai trong csdl');
 END;
-
+/* Thêm b?n ghi l?u ký */
+create or replace procedure Them_Ban_Ghi_Luu_Ky
+(MaKH varchar2, MaCK varchar2, SoLuong int)
+is 
+begin 
+insert into LuuKy values (MaKH, MaCK, SoLuong);
+end;
+ execute  Them_Ban_Ghi_Luu_Ky('KH02','FPTS','20')
+ /* Ki?m tra thông tin l?u ký */
+ set serveroutput on 
+declare
+    Ma_KH LuuKy.MaKh%type:= '&Ma_KH';
+    Ma_CK LuuKy.MaCK%type:= '&Ma_CK';
+begin
+    select tennv into ten,  from NHANVIEN where tennv=ten; 
+      dbms_output.put_line(ten||' co ton tai trong csdl');
+      EXCEPTION
+   when no_data_found then
+   dbms_output.put_line(ten||' khong co ton tai trong csdl');
+   end;
+SELECT * FROM LUUKY;
 
