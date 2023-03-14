@@ -1,7 +1,23 @@
+CREATE TABLE sangiaodich
+(
+    masan varchar2(20),
+    tensan varchar2(50),
+    ghichu varchar2(50),
+    CONSTRAINT sgd_pk PRIMARY KEY (masan)
+);
+
+CREATE TABLE phanloai
+(
+    maloai varchar2(20),
+    tenloai varchar2(50),
+    mota varchar2(50),
+    CONSTRAINT pl_pk PRIMARY KEY (maloai)
+);
+
 CREATE  TABLE khachhang
 (
     MaKH varchar2(20),
-    TenKH nvarchar2(50),
+    TenKH varchar2(50),
     MaCCCD varchar2(12),
     DiaChi nvarchar2(100),
     SDT varchar2(10),
@@ -20,18 +36,11 @@ CREATE TABLE tochucphathanh
     CONSTRAINT tcpt_pk PRIMARY KEY (MaTC)
 );
 
-CREATE TABLE loaichungkhoan
-(
-    MaLoaiCK varchar2(10),
-    TenLoaiCK nvarchar2(100),
-    CONSTRAINT lck_pk PRIMARY KEY (MaLoaiCK)
-);
-
 CREATE TABLE chungkhoan
 (   
     MaCK varchar2(10),
     MaTC varchar2(20),
-    MaLoaiCK varchar2(10),
+    MaLoai varchar2(10),
     NgayPhatHanh date,
     MenhGia number(8,2),
     CONSTRAINT ck_pk PRIMARY KEY (MaCK),
@@ -39,7 +48,9 @@ CREATE TABLE chungkhoan
     CONSTRAINT ck_tc_fk FOREIGN KEY (MaTC) REFERENCES tochucphathanh(MaTC)
 );
 
-CREATE TABLE luuky
+
+
+CREATE TABLE LuuKy
 (
     MaKH varchar2(20),
     MaCK varchar2(10),
@@ -49,6 +60,21 @@ CREATE TABLE luuky
     CONSTRAINT lk_kh_fk FOREIGN KEY (MaKH) REFERENCES khachhang (MaKH)
 );
 
+CREATE TABLE lenh
+(
+    MaLenh varchar2(20),
+    MaKH varchar2(20),
+    MaCK varchar2(10),
+    Gia float, 
+    SoLuong int, 
+    TongGiaTri int,
+    NgayDatLenh date,
+    NgayThanhToan date,
+    TrangThai varchar2(20),
+    CONSTRAINT lenh_pk PRIMARY KEY (MaLenh),
+    CONSTRAINT lenh_kh_fk FOREIGN KEY (MaKH) REFERENCES khachhang (MaKH),
+    CONSTRAINT lenh_ck_fk FOREIGN KEY (MaCK) REFERENCES chungkhoan(MaCK)
+);
 
 /* Insert */
 
